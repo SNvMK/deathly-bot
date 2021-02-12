@@ -5,6 +5,7 @@ import jishaku
 from discord.ext import commands
 
 import asyncio
+import typing
 from os import getenv
 
 
@@ -67,14 +68,14 @@ async def скажи(ctx, текст: str):
 
 @slash.slash(guild_ids=[664609892400758784])
 async def отправить(ctx,
-                    title=None,
-                    description=None,
-                    author=None,
-                    author_icon=None,
-                    thumbnail=None,
-                    image=None,
-                    footer=None,
-                    footer_icon=None
+                    title: typing.Optional,
+                    description: typing.Optional,
+                    author: typing.Optional,
+                    author_icon: typing.Optional,
+                    thumbnail: typing.Optional,
+                    image: typing.Optional,
+                    footer: typing.Optional,
+                    footer_icon: typing.Optional
 ):
     """
     Отправить настраиваемый эмбед
