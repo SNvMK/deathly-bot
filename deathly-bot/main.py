@@ -121,5 +121,7 @@ async def отправить(ctx,
             icon_url=f"{footer_icon}"
         )
 
+    await ctx.send(embed=embed)
+
 if __name__ == "__main__":
     bot.run(TOKEN)
