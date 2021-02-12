@@ -87,14 +87,14 @@ async def скажи(ctx, text: str = "я ебал меня сосали"):
     }
 )
 async def отправить(ctx,
-                    title: str = None,
-                    description: str = None,
-                    author: str = None,
-                    author_icon: str = None,
-                    thumbnail: str = None,
-                    image: str = None,
-                    footer: str = None,
-                    footer_icon: str = None
+                    title = None,
+                    description = None,
+                    author = None,
+                    author_icon = None,
+                    thumbnail = None,
+                    image = None,
+                    footer = None,
+                    footer_icon = None
 ):
     """
     Отправить настраиваемый эмбед
