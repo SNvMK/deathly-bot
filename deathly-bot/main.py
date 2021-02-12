@@ -54,7 +54,7 @@ async def скажи(ctx, текст: str):
     Сказать что-нибудь
     """
 
-    await ctx.ack()
+    await ctx.ack(eat=True)
 
     embed = discord.Embed(
         title=discord.Embed.Empty,
