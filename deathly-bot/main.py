@@ -13,7 +13,7 @@ bot = commands.AutoShardedBot(
     "/",
     intents=discord.Intents.all(),
     activity=discord.Activity(type=discord.ActivityType.competing, name="cum зоне"),
-    status=discord.Status.idle(),
+    status=discord.Status.idle,
     owner_id=487845696100368384
 )
 
