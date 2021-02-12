@@ -28,7 +28,7 @@ async def on_ready():
     bot.load_extension("jishaku")
     print(f"Запущен бот {str(bot.user)}")
 
-@slash.slash(guild_ids=[guild.id for guild in bot.guilds])
+@slash.slash(guild_ids=[664609892400758784])
 async def пинг(ctx):
     """
     Понг!
