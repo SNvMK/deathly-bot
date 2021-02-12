@@ -17,8 +17,7 @@ bot = commands.AutoShardedBot(
     status=discord.Status.idle,
     owner_id=487845696100368384
 )
-
-
+bot.remove_command("help")
 slash = discord_slash.SlashCommand(
     bot,
     sync_commands=True
@@ -66,6 +65,61 @@ async def скажи(ctx, текст: str):
         await asyncio.sleep(3.0)
         await ctx.send(embed=embed)
 
+@slash.slash(guild_ids=[664609892400758784])
+async def отправить(ctx,
+                    title=None,
+                    description=None,
+                    author=None,
+                    author_icon=None,
+                    thumbnail=None,
+                    image=None,
+                    footer=None,
+                    footer_icon=None
+):
+    """
+    Отправить настраиваемый эмбед
+    """
+    embed = discord.Embed()
+
+    if title:
+        embed.title = title
+    else:
+        embed.title = embed.Empty
+    
+    if description:
+        embed.description = description
+    else:
+        embed.description = embed.Empty
+
+    if author and not author_icon:
+        embed.set_author(
+            name=author
+        )
+    elif author and author_icon:
+        embed.set_author(
+            name=author,
+            icon_url=author_icon
+        )
+    
+    if thumbnail:
+        embed.set_thumbnail(
+            url=thumbnail
+        )
+
+    if image:
+        embed.set_image(
+            url=image
+        )
+
+    if footer and not footer_icon:
+        embed.set_footer(
+            text=footer
+        )
+    elif footer and footer_icon:
+        embed.set_footer(
+            text=footer,
+            icon_url=footer_icon
+        )
 
 if __name__ == "__main__":
     bot.run(TOKEN)
