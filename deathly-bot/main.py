@@ -6,6 +6,7 @@ from discord.ext import commands
 
 import asyncio
 import typing
+import logging
 from os import getenv
 
 
@@ -23,6 +24,7 @@ slash = discord_slash.SlashCommand(
     bot,
     sync_commands=True
 )
+logging = logging.basicConfig(level=logging.DEBUG)
 
 @bot.event
 async def on_ready():
