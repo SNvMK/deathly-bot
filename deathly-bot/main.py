@@ -98,17 +98,17 @@ async def отправить(ctx,
     elif author and author_icon:
         embed.set_author(
             name=author,
-            icon_url=author_icon
+            icon_url=f"{author_icon}"
         )
     
     if thumbnail:
         embed.set_thumbnail(
-            url=thumbnail
+            url=f"{thumbnail}"
         )
 
     if image:
         embed.set_image(
-            url=image
+            url=f"{image}"
         )
 
     if footer and not footer_icon:
@@ -118,7 +118,7 @@ async def отправить(ctx,
     elif footer and footer_icon:
         embed.set_footer(
             text=footer,
-            icon_url=footer_icon
+            icon_url=f"{footer_icon}"
         )
 
 if __name__ == "__main__":
