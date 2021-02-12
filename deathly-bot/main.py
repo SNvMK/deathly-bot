@@ -13,7 +13,7 @@ bot = commands.AutoShardedBot(
     "/",
     intents=discord.Intents.all(),
 )
-info = bot.application_info()
+info = await bot.application_info()
 bot.description = info.description
 bot.owner_id = info.owner.id
 
