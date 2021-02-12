@@ -13,9 +13,7 @@ bot = commands.AutoShardedBot(
     "/",
     intents=discord.Intents.all(),
 )
-info = await bot.application_info()
-bot.description = info.description
-bot.owner_id = info.owner.id
+
 
 slash = discord_slash.SlashCommand(
     bot,
@@ -24,6 +22,9 @@ slash = discord_slash.SlashCommand(
 
 @bot.event
 async def on_ready():
+    info = await bot.application_info()
+    bot.description = info.description
+    bot.owner_id = info.owner.id
     bot.load_extension("jishaku")
     print(f"Запущен бот {str(bot.user)}")
 
