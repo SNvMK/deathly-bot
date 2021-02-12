@@ -48,8 +48,13 @@ async def пинг(ctx):
 
     await ctx.send(embed=embed)
 
-@slash.slash(guild_ids=[664609892400758784])
-async def скажи(ctx, текст: str):
+@slash.slash(
+    guild_ids=[664609892400758784],
+    connector={
+        "text": "текст"
+    }
+)
+async def скажи(ctx, text: str):
     """
     Сказать что-нибудь
     """
@@ -58,7 +63,7 @@ async def скажи(ctx, текст: str):
 
     embed = discord.Embed(
         title=discord.Embed.Empty,
-        description=f"**{текст}**",
+        description=f"**{text}**",
         color=0x2F3136
     )
 
@@ -66,16 +71,28 @@ async def скажи(ctx, текст: str):
         await asyncio.sleep(3.0)
         await ctx.send(embed=embed)
 
-@slash.slash(guild_ids=[664609892400758784])
+@slash.slash(
+    guild_ids=[664609892400758784],
+    connector={
+        "заголовок": "title",
+        "описание": "description",
+        "автор": "author",
+        "аватар": "author_icon",
+        "иконка": "thumbnail",
+        "изображение": "image",
+        "футер": "footer",
+        "иконка_футера": "footer_icon"
+    }
+)
 async def отправить(ctx,
-                    title: typing.Optional,
-                    description: typing.Optional,
-                    author: typing.Optional,
-                    author_icon: typing.Optional,
-                    thumbnail: typing.Optional,
-                    image: typing.Optional,
-                    footer: typing.Optional,
-                    footer_icon: typing.Optional
+                    title: str = None,
+                    description: str = None,
+                    author: str = None,
+                    author_icon: str = None,
+                    thumbnail: str = None,
+                    image: str = None,
+                    footer: str = None,
+                    footer_icon: str = None
 ):
     """
     Отправить настраиваемый эмбед
