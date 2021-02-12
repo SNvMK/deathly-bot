@@ -1,0 +1,1 @@
+worker: python deatly-bot/main.py
