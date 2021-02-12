@@ -56,7 +56,7 @@ async def пинг(ctx):
         "текст": "text"
     }
 )
-async def скажи(ctx, text: str):
+async def скажи(ctx, text: str = "я ебал меня сосали"):
     """
     Сказать что-нибудь
     """
