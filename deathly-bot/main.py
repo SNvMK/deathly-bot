@@ -4,6 +4,7 @@ import jishaku
 
 from discord.ext import commands
 
+import asyncio
 from os import getenv
 
 
@@ -46,6 +47,24 @@ async def пинг(ctx):
     )
 
     await ctx.send(embed=embed)
+
+@slash.slash(guild_ids=[664609892400758784])
+async def скажи(ctx, текст: str):
+    """
+    Сказать что-нибудь
+    """
+
+    await ctx.ack()
+
+    embed = discord.Embed(
+        title=discord.Embed.Empty,
+        description=f"**{текст}**",
+        color=0x2F3136
+    )
+
+    async with ctx.channel.typing():
+        await asyncio.sleep(3.0)
+        await ctx.send(embed=embed)
 
 
 if __name__ == "__main__":
