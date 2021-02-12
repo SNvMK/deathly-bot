@@ -37,7 +37,7 @@ async def пинг(ctx):
     await ctx.ack()
 
     embed = discord.Embed(
-        title=f"Понг! Пинг сокета: {round(bot.latency) * 1000} мс",
+        title=f"Понг! Пинг сокета: {round(bot.latency * 1000)} мс",
         color=discord.Color.blurple()
     )
     embed.set_author(
