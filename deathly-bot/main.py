@@ -13,8 +13,9 @@ bot = commands.AutoShardedBot(
     "/",
     intents=discord.Intents.all(),
 )
-bot.description = bot.application_info().description
-bot.owner_id = bot.application_info().owner.id
+info = bot.application_info()
+bot.description = info.description
+bot.owner_id = info.owner.id
 
 slash = discord_slash.SlashCommand(
     bot,
