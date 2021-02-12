@@ -51,7 +51,7 @@ async def пинг(ctx):
 @slash.slash(
     guild_ids=[664609892400758784],
     connector={
-        "text": "текст"
+        "текст": "text"
     }
 )
 async def скажи(ctx, text: str):
