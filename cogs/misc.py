@@ -38,6 +38,7 @@ class Misc(commands.Cog):
         await ctx.send(embed=embed)
 
     async def spam(self, ctx, text, interval):
+        await ctx.ack(eat=True)
         while True:
             await ctx.send(text)
             await asyncio.sleep(interval)
