@@ -43,16 +43,22 @@ class Misc(commands.Cog):
             await ctx.send(text)
             await asyncio.sleep(interval)
     
+    @commands.has_permissions(administrator=True)
     @cog_ext.cog_slash(
         name="спам",
+        connector={
+            "текст": "text",
+            "интервал": "interval"
+        },
         guild_ids=[664609892400758784]
     )
     async def spam_cmd(self, ctx,
-                       текст: str = "ATTACK",
-                       интервал: int = 3
+                       text: str = "ATTACK",
+                       interval: int = 3
     ):
-        self.bot.loop.create_task(self.spam(ctx, текст, интервал), name="SPAM")
+        self.bot.loop.create_task(self.spam(ctx, text, interval), name="SPAM")
 
+    @commands.has_permissions(administrator=True)
     @cog_ext.cog_slash(
         name="стоп-спам",
         guild_ids=[664609892400758784]

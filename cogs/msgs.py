@@ -16,9 +16,12 @@ class Messages(commands.Cog):
 
     @cog_ext.cog_slash(
         name="скажи",
+        connector={
+            "сообщение": "text"
+        },
         guild_ids=[664609892400758784]
     )
-    async def say(self, ctx, сообщение: str = "я ебал меня сосали"):
+    async def say(self, ctx, text: str = "я ебал меня сосали"):
         """
         Сказать что-нибудь
         """
@@ -27,7 +30,7 @@ class Messages(commands.Cog):
 
         embed = discord.Embed(
             title=discord.Embed.Empty,
-            description=f"**{сообщение}**",
+            description=f"**{text}**",
             color=0x2F3136
         )
 
