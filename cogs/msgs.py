@@ -44,6 +44,7 @@ class Messages(commands.Cog):
     async def send(self, ctx,
                    title = None,
                    description = None,
+                   color = None,
                    author = None,
                    author_icon = None,
                    thumbnail = None,
@@ -68,6 +69,11 @@ class Messages(commands.Cog):
             embed.description = description
         else:
             embed.description = embed.Empty
+
+        if color:
+            embed.color = int('0x'+color, base=16)
+        else:
+            embed.color = discord.Color.default()
 
         if author and not author_icon:
             embed.set_author(
