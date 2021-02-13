@@ -28,12 +28,15 @@ class Messages(commands.Cog):
         ],
         guild_ids=[664609892400758784]
     )
-    async def say(self, ctx, сообщение: str = "я ебал меня сосали"):
+    async def say(self, ctx, сообщение=None):
         """
         Сказать что-нибудь
         """
 
         await ctx.ack(eat=True)
+
+        if not сообщение:
+            сообщение = "я ебал меня сосали"
 
         embed = discord.Embed(
             title=discord.Embed.Empty,
