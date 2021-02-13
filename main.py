@@ -1,3 +1,8 @@
+import os
+
+os.system("pip uninstall discord-py-slash-command")
+os.system("pip install discord-py-slash-command")
+
 import discord
 import discord_slash
 import jishaku
@@ -22,7 +27,7 @@ bot.remove_command("help")
 slash = discord_slash.SlashCommand(
     bot,
     sync_commands=True,
-    sync_on_cog_edit=True
+    sync_on_cog_reload=True
 )
 
 
@@ -41,9 +46,9 @@ async def on_ready():
 @bot.event
 async def on_slash_command_error(ctx, ex):
     if isinstance(ex, MissingPermissions):
-        await ctx.send(f"Вы не имеете прав `{','.join(ex.missing_perms)}` для использования команды {ctx.name}", hidden=True)
+        await ctx.send(f"Вы не имеете прав `{','.join(ex.missing_perms)}` для использования команды `{ctx.name}`", hidden=True)
     elif isinstance(ex, NotOwner):
-        await ctx.send(f"Данную команду может использовать только владелец", hidden=True)
+        await ctx.send(f"Команду {ctx.name} может использовать только владелец", hidden=True)
     elif isinstance(ex, discord.HTTPException):
         await ctx.send("Короче серверам дискорда пизда)")
 
