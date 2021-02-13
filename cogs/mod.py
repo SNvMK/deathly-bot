@@ -9,9 +9,6 @@ class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    def cog_load(self):
-        self.bot.slash.sync_all_commands()
-
     def cog_unload(self):
         self.bot.slash.remove_cog_commands(self)
 

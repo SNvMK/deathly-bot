@@ -3,6 +3,7 @@ import discord_slash
 import jishaku
 
 from discord.ext import commands
+from discord import MissingPermissions
 
 from os import getenv, listdir
 
@@ -36,6 +37,10 @@ async def on_ready():
     print("Загружен модуль дебага...")
 
     print(f"Бот запущен как {str(bot.user)}")
+
+@bot.event
+async def on_slash_command_error(ctx, ex):
+    ...
 
 
 if __name__ == "__main__":

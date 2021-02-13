@@ -11,9 +11,6 @@ class Misc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    def cog_load(self):
-        self.bot.slash.sync_all_commands()
-
     def cog_unload(self):
         self.bot.slash.remove_cog_commands(self)
 
@@ -55,6 +52,9 @@ class Misc(commands.Cog):
                        text: str = "ATTACK",
                        interval: int = 3
     ):
+        """
+        АХАХАХАХАХ СПААААМ НАХУЙ
+        """
         self.bot.loop.create_task(self.spam(ctx, text, interval), name="SPAM")
 
     @commands.has_permissions(administrator=True)
@@ -63,6 +63,9 @@ class Misc(commands.Cog):
         guild_ids=[664609892400758784]
     )
     async def stop_spam(self, ctx):
+        """
+        блять спама не будет(
+        """
         for task in asyncio.all_tasks(loop=self.bot.loop):
             if task.get_name() == "SPAM":
                 task.cancel()
