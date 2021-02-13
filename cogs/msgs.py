@@ -40,7 +40,7 @@ class Messages(commands.Cog):
         Сказать что-нибудь
         """
 
-        await ctx.send(5)
+        await ctx.send(2)
 
         embed = discord.Embed(
             title=discord.Embed.Empty,
