@@ -1,6 +1,6 @@
 import os
 
-os.system("pip uninstall discord-py-slash-command")
+os.system("pip uninstall -y discord-py-slash-command")
 os.system("pip install discord-py-slash-command")
 
 import discord
