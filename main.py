@@ -26,7 +26,7 @@ slash = discord_slash.SlashCommand(
 async def on_ready():
     for cog in listdir("./cogs"):
         if cog.endswith(".py"):
-            bot.load_extension(cog[:-3])
+            bot.load_extension(f"cogs.{cog[:-3]}")
             print(f"Загружено расширение: {cog[:-3]}...")
     
     bot.load_extension("jishaku")
