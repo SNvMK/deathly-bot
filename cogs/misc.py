@@ -8,7 +8,6 @@ from discord_slash import cog_ext
 class Misc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.bot.slash.get_cog_commands(self)
 
     def cog_unload(self):
         self.bot.slash.remove_cog_commands(self)
@@ -26,7 +25,7 @@ class Misc(commands.Cog):
 
         embed = discord.Embed(
             title=f"Понг!",
-            description=f"Пинг сокета: {round(bot.latency * 1000)} мс",
+            description=f"Пинг сокета: {round(self.bot.latency * 1000)} мс",
             color=discord.Color.blurple()
         )
         embed.set_author(
