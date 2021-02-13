@@ -19,7 +19,8 @@ bot = commands.AutoShardedBot(
 bot.remove_command("help")
 slash = discord_slash.SlashCommand(
     bot,
-    sync_commands=True
+    auto_delete=True,
+    auto_register=True
 )
 
 @bot.event
