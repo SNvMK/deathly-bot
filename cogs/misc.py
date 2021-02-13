@@ -59,7 +59,7 @@ class Misc(commands.Cog):
     )
     async def stop_spam(self, ctx):
         for task in asyncio.all_tasks(loop=self.bot.loop):
-            if task == "SPAM":
+            if task.get_name() == "SPAM":
                 task.cancel()
 
 
