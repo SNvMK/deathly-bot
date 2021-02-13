@@ -99,7 +99,7 @@ class Messages(commands.Cog):
                 icon_url=f"{footer_icon}"
             )
 
-        await ctx.send(embeds=embed)
+        await ctx.send(embed=embed)
 
 
 def setup(bot):
