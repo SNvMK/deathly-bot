@@ -28,7 +28,7 @@ class Misc(commands.Cog):
         embed = discord.Embed(
             title=f"Понг!",
             description=f"Пинг сокета: {round(self.bot.latency * 1000)} мс",
-            color=discord.Color.blurple()
+            color=self.bot.embed_color
         )
         embed.set_author(
             name=ctx.author,

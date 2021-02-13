@@ -16,11 +16,11 @@ bot = commands.AutoShardedBot(
     status=discord.Status.idle,
     owner_id=487845696100368384
 )
+bot.embed_color = 0x0EA1EB
 bot.remove_command("help")
 slash = discord_slash.SlashCommand(
     bot,
     sync_commands=True,
-    
     sync_on_cog_edit=True
 )
 
@@ -33,7 +33,7 @@ async def on_ready():
     
     bot.load_extension("jishaku")
     print("Загружен модуль дебага...")
-
+    
     print(f"Бот запущен как {str(bot.user)}")
 
 
