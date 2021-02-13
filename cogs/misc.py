@@ -38,7 +38,6 @@ class Misc(commands.Cog):
         await ctx.send(embed=embed)
 
     async def spam(self, ctx, text, interval):
-        await ctx.ack(eat=True)
         while True:
             await ctx.send(text)
             await asyncio.sleep(interval)
@@ -55,6 +54,7 @@ class Misc(commands.Cog):
         """
         АХАХАХАХАХ СПААААМ НАХУЙ
         """
+        await ctx.ack(eat=True)
         self.bot.loop.create_task(self.spam(ctx, text, interval), name="SPAM")
 
     @commands.has_permissions(administrator=True)
