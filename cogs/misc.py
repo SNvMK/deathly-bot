@@ -8,7 +8,6 @@ from discord_slash import cog_ext
 class Misc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.bot.slash.get_cog_commands(self)
 
     def cog_unload(self):
         self.bot.slash.remove_cog_commands(self)
@@ -22,7 +21,7 @@ class Misc(commands.Cog):
         Понг!
         """
 
-        await ctx.send(5)
+        await ctx.ack()
 
         embed = discord.Embed(
             title=f"Понг!",
@@ -34,7 +33,7 @@ class Misc(commands.Cog):
             icon_url=ctx.author.avatar_url
         )
 
-        await ctx.send(3, embeds=[embed])
+        await ctx.send(embed=embed)
 
 
 def setup(bot):

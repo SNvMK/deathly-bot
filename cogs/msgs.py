@@ -12,26 +12,20 @@ import asyncio
 class Messages(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.bot.slash.get_cog_commands(self)
 
     def cog_unload(self):
         self.bot.slash.remove_cog_commands(self)
 
     @cog_ext.cog_slash(
         name="скажи",
-        description="Сказать что-нибудь",
-        options=[
-            create_option(
-                "сообщение",
-                "Сообщение, которое надо сказать",
-                types.STRING,
-                False
-            )
-        ],
         guild_ids=[664609892400758784]
     )
     async def say(self, ctx, сообщение: str = "я ебал меня сосали"):
-        await ctx.send(2)
+        """
+        Сказать что-нибудь
+        """
+
+        await ctx.ack(eat=True)
 
         embed = discord.Embed(
             title=discord.Embed.Empty,
@@ -41,11 +35,10 @@ class Messages(commands.Cog):
 
         async with ctx.channel.typing():
             await asyncio.sleep(3.0)
-            await ctx.send(3, embeds=[embed])
+            await ctx.send(embed=embed)
 
     @cog_ext.cog_slash(
         name="отправить",
-        description="Отправить настраиваемый эмбед",
         guild_ids=[664609892400758784]
     )
     async def send(self, ctx,
@@ -58,7 +51,11 @@ class Messages(commands.Cog):
                    footer = None,
                    footer_icon = None
     ):
-        await ctx.send(2)
+        """
+        Отправить настраиваемый эмбед
+        """
+
+        await ctx.ack(eat=True)
 
         embed = discord.Embed()
 
@@ -102,7 +99,7 @@ class Messages(commands.Cog):
                 icon_url=f"{footer_icon}"
             )
 
-        await ctx.send(3, embeds=[embed])
+        await ctx.send(embeds=embed)
 
 
 def setup(bot):
