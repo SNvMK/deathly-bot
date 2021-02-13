@@ -11,14 +11,14 @@ class Messages(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    def cog_load(self):
+        self.bot.slash.sync_all_commands()
+
     def cog_unload(self):
         self.bot.slash.remove_cog_commands(self)
 
     @cog_ext.cog_slash(
         name="скажи",
-        connector={
-            "сообщение": "text"
-        },
         guild_ids=[664609892400758784]
     )
     async def say(self, ctx, text: str = "я ебал меня сосали"):

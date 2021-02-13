@@ -9,15 +9,15 @@ class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    def cog_load(self):
+        self.bot.slash.sync_all_commands()
+
     def cog_unload(self):
         self.bot.slash.remove_cog_commands(self)
 
     @commands.has_permissions(manage_messages=True)
     @cog_ext.cog_slash(
         name="очистить",
-        connector={
-            "количетсво": "ampount"
-        },
         guild_ids=[664609892400758784]
     )
     async def purge(self, ctx, amount: int):

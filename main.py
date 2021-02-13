@@ -24,16 +24,17 @@ slash = discord_slash.SlashCommand(
     sync_on_cog_edit=True
 )
 
+
+for cog in listdir("./cogs"):
+    if cog.endswith(".py"):
+        bot.load_extension(f"cogs.{cog[:-3]}")
+        print(f"Загружено расширение: {cog[:-3]}...")
+
 @bot.event
 async def on_ready():
-    for cog in listdir("./cogs"):
-        if cog.endswith(".py"):
-            bot.load_extension(f"cogs.{cog[:-3]}")
-            print(f"Загружено расширение: {cog[:-3]}...")
-    
     bot.load_extension("jishaku")
     print("Загружен модуль дебага...")
-    
+
     print(f"Бот запущен как {str(bot.user)}")
 
 
