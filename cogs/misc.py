@@ -47,9 +47,9 @@ class Misc(commands.Cog):
         name="спам",
         guild_ids=[664609892400758784]
     )
-    async def spam(self, ctx,
-                   текст: str = "ATTACK",
-                   интервал: int = 3
+    async def spam_cmd(self, ctx,
+                       текст: str = "ATTACK",
+                       интервал: int = 3
     ):
         self.bot.loop.create_task(self.spam(ctx, текст, интервал), name="SPAM")
 
