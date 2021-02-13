@@ -12,12 +12,6 @@ import asyncio
 class Messages(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        if not hasattr(self.bot, "slash"):
-            self.bot.slash = discord_slash.SlashCommand(
-                bot, 
-                auto_delete=True, 
-                auto_register=True
-            )
         self.bot.slash.get_cog_commands(self)
 
     def cog_unload(self):
@@ -25,6 +19,7 @@ class Messages(commands.Cog):
 
     @cog_ext.cog_slash(
         name="скажи",
+        description="Сказать что-нибудь",
         options=[
             create_option(
                 "сообщение",
@@ -36,10 +31,6 @@ class Messages(commands.Cog):
         guild_ids=[664609892400758784]
     )
     async def say(self, ctx, сообщение: str = "я ебал меня сосали"):
-        """
-        Сказать что-нибудь
-        """
-
         await ctx.send(2)
 
         embed = discord.Embed(
@@ -54,9 +45,7 @@ class Messages(commands.Cog):
 
     @cog_ext.cog_slash(
         name="отправить",
-        options=[
-            
-        ],
+        description="Отправить настраиваемый эмбед",
         guild_ids=[664609892400758784]
     )
     async def send(self, ctx,
@@ -69,11 +58,7 @@ class Messages(commands.Cog):
                    footer = None,
                    footer_icon = None
     ):
-        """
-        Отправить настраиваемый эмбед
-        """
-
-        await ctx.send(5)
+        await ctx.send(2)
 
         embed = discord.Embed()
 

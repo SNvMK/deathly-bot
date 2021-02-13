@@ -17,7 +17,7 @@ bot = commands.AutoShardedBot(
     owner_id=487845696100368384
 )
 bot.remove_command("help")
-slash = discord_slash.SlashCommand(
+bot.slash = discord_slash.SlashCommand(
     bot,
     auto_delete=True,
     auto_register=True
