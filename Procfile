@@ -1,1 +1,1 @@
-worker: python deathly-bot/main.py
+worker: python main.py
