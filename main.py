@@ -3,7 +3,7 @@ import discord_slash
 import jishaku
 
 from discord.ext import commands
-from discord import MissingPermissions
+from discord.ext.commands import MissingPermissions, NotOwner
 
 from os import getenv, listdir
 
@@ -40,7 +40,12 @@ async def on_ready():
 
 @bot.event
 async def on_slash_command_error(ctx, ex):
-    ...
+    if isinstance(ex, MissingPermissions):
+        await ctx.send(f"Вы не имеете прав `{','.join(ex.missing_perms)}` для использования команды {ctx.name}", hidden=True)
+    elif isinstance(ex, NotOwner):
+        await ctx.send(f"Данную команду может использовать только владелец", hidden=True)
+    elif isinstance(ex, discord.HTTPException):
+        await ctx.send("Короче серверам дискорда пизда)")
 
 
 if __name__ == "__main__":
