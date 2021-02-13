@@ -4,6 +4,8 @@ import discord_slash
 from discord.ext import commands
 from discord_slash import cog_ext
 
+import asyncio
+
 
 class Misc(commands.Cog):
     def __init__(self, bot):
@@ -34,6 +36,30 @@ class Misc(commands.Cog):
         )
 
         await ctx.send(embed=embed)
+
+    async def spam(self, ctx, text, interval):
+        while True:
+            await ctx.send(text)
+            await asyncio.sleep(interval)
+    
+    @cog_ext.cog_slash(
+        name="спам",
+        guild_ids=[664609892400758784]
+    )
+    async def spam(self, ctx,
+                   текст: str = "ATTACK",
+                   интервал: int = 3
+    ):
+        self.bot.loop.create_task(spam(ctx, текст, интервал), name="SPAM")
+
+    @cog_ext.cog_slash(
+        name="стоп-спам",
+        guild_ids=[664609892400758784]
+    )
+    async def stop_spam(self, ctx):
+        for task in asyncio.all_tasks(loop=self.bot.loop):
+            if task.name == "SPAM":
+                task.cancel()
 
 
 def setup(bot):
