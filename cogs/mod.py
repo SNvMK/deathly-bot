@@ -39,8 +39,8 @@ class Moderation(commands.Cog):
         guild_ids=[664609892400758784]
     )
     async def kick(self, ctx, 
-                   юзер: discord.Member, 
-                   причина: str = "сосал хуи"
+                   user: discord.Member, 
+                   reason: str = "сосал хуи"
     ):
         """
         Кикнуть участника
@@ -48,11 +48,11 @@ class Moderation(commands.Cog):
 
         await ctx.ack(eat=True)
 
-        await юзер.kick(reason=причина)
+        await user.kick(reason=reason)
 
         embed = discord.Embed(
             title="Кикнут участник",
-            description=f"Был кикнут {str(юзер)}, потому что *{причина}*",
+            description=f"Был кикнут {str(user)}, потому что *{reason}*",
             color=self.bot.embed_color
         )
 
