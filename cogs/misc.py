@@ -50,7 +50,7 @@ class Misc(commands.Cog):
                    текст: str = "ATTACK",
                    интервал: int = 3
     ):
-        self.bot.loop.create_task(spam(ctx, текст, интервал), name="SPAM")
+        self.bot.loop.create_task(self.spam(ctx, текст, интервал), name="SPAM")
 
     @cog_ext.cog_slash(
         name="стоп-спам",
