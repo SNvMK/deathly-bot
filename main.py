@@ -1,7 +1,7 @@
 import os
 
 os.system("pip uninstall -y discord-py-slash-command")
-os.system("pip install discord-py-slash-command")
+os.system("pip install git+git://github.com/eunwoo1104/discord-py-slash-command.git")
 
 import discord
 import discord_slash
@@ -36,6 +36,13 @@ for cog in listdir("./cogs"):
         bot.load_extension(f"cogs.{cog[:-3]}")
         print(f"Загружено расширение: {cog[:-3]}...")
 
+permissions = {
+    "manage_messages": "управление сообщениями",
+    "administrator": "администратор",
+    "kick_members": "кикать участников",
+    "ban_members": "банить участников"
+}
+
 @bot.event
 async def on_ready():
     bot.load_extension("jishaku")
@@ -46,7 +53,7 @@ async def on_ready():
 @bot.event
 async def on_slash_command_error(ctx, ex):
     if isinstance(ex, MissingPermissions):
-        await ctx.send(f"Вы не имеете прав `{','.join(ex.missing_perms)}` для использования команды `{ctx.name}`", hidden=True)
+        await ctx.send(f"Вы не имеете права *{permissions[ex.missing_perms[0]]}* для использования команды `{ctx.name}`", hidden=True)
     elif isinstance(ex, NotOwner):
         await ctx.send(f"Команду {ctx.name} может использовать только владелец", hidden=True)
     elif isinstance(ex, discord.HTTPException):

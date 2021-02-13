@@ -15,9 +15,10 @@ class Moderation(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     @cog_ext.cog_slash(
         name="очистить",
+        connector={"количетсво": "amount"},
         guild_ids=[664609892400758784]
     )
-    async def purge(self, ctx, amount: int):
+    async def purge(self, ctx, amount: int = 10):
         """
         Очистить сообщения
         """
@@ -27,6 +28,64 @@ class Moderation(commands.Cog):
         purge = await ctx.channel.purge(limit=amount)
 
         await ctx.send(f"Сообщений очищено: [{len(purge)}](https://snvmk.tk/)", delete_after=3.0)
+
+    @commands.has_permissions(kick_members=True)
+    @cog_ext.cog_slash(
+        name="кик",
+        connector={
+            "юзер": "user",
+            "причина": "reason"
+        },
+        guild_ids=[664609892400758784]
+    )
+    async def kick(self, ctx, 
+                   юзер: discord.Member, 
+                   причина: str = "сосал хуи"
+    ):
+        """
+        Кикнуть участника
+        """
+
+        await ctx.ack(eat=True)
+
+        await юзер.kick(reason=причина)
+
+        embed = discord.Embed(
+            title="Кикнут участник",
+            description=f"Был кикнут {str(юзер)}, потому что *{причина}*",
+            color=self.bot.embed_color
+        )
+
+        await ctx.send(embed=embed)
+
+    @commands.has_permissions(ban_members=True)
+    @cog_ext.cog_slash(
+        name="бан",
+        connector={
+            "юзер": "user",
+            "причина": "reason"
+        },
+        guild_ids=[664609892400758784]
+    )
+    async def ban(self, ctx, 
+                  user: discord.Member, 
+                  reason: str = "сосал хуи"
+    ):
+        """
+        Забанить участника
+        """
+
+        await ctx.ack(eat=True)
+
+        await user.ban(reason=reason)
+
+        embed = discord.Embed(
+            title="Забанен участник",
+            description=f"Был забанен {str(user)}, потому что *{reason}*",
+            color=self.bot.embed_color
+        )
+
+        await ctx.send(embed=embed)
 
 
 def setup(bot):

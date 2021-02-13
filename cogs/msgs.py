@@ -16,6 +16,7 @@ class Messages(commands.Cog):
 
     @cog_ext.cog_slash(
         name="скажи",
+        connector={"текст": "text"},
         guild_ids=[664609892400758784]
     )
     async def say(self, ctx, text: str = "я ебал меня сосали"):

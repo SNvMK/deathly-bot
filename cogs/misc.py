@@ -45,6 +45,10 @@ class Misc(commands.Cog):
     @commands.has_permissions(administrator=True)
     @cog_ext.cog_slash(
         name="спам",
+        connector={
+            "текст": "text",
+            "интервал": "interval"
+        },
         guild_ids=[664609892400758784]
     )
     async def spam_cmd(self, ctx,
