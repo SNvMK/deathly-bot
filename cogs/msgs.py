@@ -28,7 +28,7 @@ class Messages(commands.Cog):
         ],
         guild_ids=[664609892400758784]
     )
-    async def say(self, ctx, text: str = "я ебал меня сосали"):
+    async def say(self, ctx, сообщение: str = "я ебал меня сосали"):
         """
         Сказать что-нибудь
         """
@@ -37,7 +37,7 @@ class Messages(commands.Cog):
 
         embed = discord.Embed(
             title=discord.Embed.Empty,
-            description=f"**{text}**",
+            description=f"**{сообщение}**",
             color=0x2F3136
         )
 
