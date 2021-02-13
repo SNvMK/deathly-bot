@@ -19,7 +19,9 @@ bot = commands.AutoShardedBot(
 bot.remove_command("help")
 slash = discord_slash.SlashCommand(
     bot,
-    auto_delete=True
+    sync_commands=True,
+    delete_from_unused_guilds=True,
+    sync_on_cog_edit=True
 )
 
 @bot.event
