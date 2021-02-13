@@ -38,6 +38,17 @@ class Messages(commands.Cog):
 
     @cog_ext.cog_slash(
         name="отправить",
+        connector={
+            "заголовок": "title",
+            "описание": "description",
+            "цвет": "color",
+            "автор": "author",
+            "аватар": "author_icon",
+            "иконка": "thumbnail",
+            "изображение": "image",
+            "футер": "footer",
+            "иконка-футера": "footer_icon"
+        },
         guild_ids=[664609892400758784]
     )
     async def send(self, ctx,
