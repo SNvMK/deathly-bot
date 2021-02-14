@@ -45,7 +45,8 @@ class Tags(commands.Cog):
                     ) VALUES (%s, %s, %s);
                         """
                         await cur.execute(injection, (ctx.author_id, name, response))
-                        await conn.commit()
+                        
+                        conn.commit()
                         await ctx.send(f"Создан тэг {name}!", hidden=True)
 
     @cog_ext.cog_subcommand(
