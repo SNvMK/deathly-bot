@@ -32,8 +32,8 @@ class Tags(commands.Cog):
             async with pool.acquire() as conn:
                 async with conn.cursor() as cur:
                     await cur.execute("SELECT * FROM tags;")
-                    for tag in cur:
-                        if tag[2] == name:
+                    async for tag in cur:
+                        if tag[1] == name:
                             await ctx.send(f"Тэг {name} уже существует!", hidden=True)
                             break
                         else:
@@ -45,6 +45,7 @@ class Tags(commands.Cog):
                             ) VALUES (%s, %s, %s);
                             """
                             await cur.execute(injection, (ctx.author_id, name, response))
+                            await conn.commit()
                             await ctx.send(f"Создан тэг {name}!", hidden=True)
                             break
 
