@@ -36,18 +36,17 @@ class Tags(commands.Cog):
                         if tag[1] == name:
                             await ctx.send(f"Тэг {name} уже существует!", hidden=True)
                             break
-                        else:
-                            injection = """
-                            INSERT INTO tags (
-                                author, 
-                                name, 
-                                response
-                            ) VALUES (%s, %s, %s);
-                            """
-                            await cur.execute(injection, (ctx.author_id, name, response))
-                            await conn.commit()
-                            await ctx.send(f"Создан тэг {name}!", hidden=True)
-                            break
+                    else:
+                        injection = """
+                        INSERT INTO tags (
+                            author, 
+                            name, 
+                            response
+                    ) VALUES (%s, %s, %s);
+                        """
+                        await cur.execute(injection, (ctx.author_id, name, response))
+                        await conn.commit()
+                        await ctx.send(f"Создан тэг {name}!", hidden=True)
 
     @cog_ext.cog_subcommand(
         base="тэги",
@@ -60,7 +59,7 @@ class Tags(commands.Cog):
         guild_ids=[664609892400758784]
     )
     async def search_tag(self, ctx,
-                      name: str
+                         name: str
     ):
         async with aiopg.create_pool(self.bot.db_url) as pool:
             async with pool.acquire() as conn:
