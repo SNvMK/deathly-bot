@@ -10,10 +10,12 @@ import jishaku
 from discord.ext import commands
 from discord.ext.commands import MissingPermissions, NotOwner
 
+import aiopg
 from os import getenv, listdir
 
 
 TOKEN = getenv("TOKEN")
+DATABASE_URL = getenv("DATABASE_URL")
 
 bot = commands.AutoShardedBot(
     "/",
@@ -23,6 +25,7 @@ bot = commands.AutoShardedBot(
     owner_id=487845696100368384
 )
 bot.embed_color = 0x0EA1EB
+bot.db_url = DATABASE_URL
 bot.remove_command("help")
 slash = discord_slash.SlashCommand(
     bot,
@@ -45,6 +48,17 @@ permissions = {
 
 @bot.event
 async def on_ready():
+    async with aiopg.create_pool(bot.db_url) as pool:
+        async with pool.acquire() as conn:
+            async with conn.cursor() as cur:
+                injection = """
+                CREATE TABLE tags (
+                    author NUMBER, 
+                    name TEXT, 
+                    response TEXT
+                );
+                """
+                await cur.execute(injection)
     bot.load_extension("jishaku")
     print("Загружен модуль дебага...")
 
