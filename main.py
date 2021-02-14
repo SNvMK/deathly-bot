@@ -53,8 +53,8 @@ async def on_ready():
             async with conn.cursor() as cur:
                 injection = """
                 CREATE TABLE IF NOT EXISTS tags (
-                    author integer, 
-                    name text, 
+                    author bigint,
+                    name text,
                     response text
                 );
                 """
