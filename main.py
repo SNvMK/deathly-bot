@@ -52,7 +52,7 @@ async def on_ready():
         async with pool.acquire() as conn:
             async with conn.cursor() as cur:
                 injection = """
-                CREATE TABLE tags (
+                CREATE TABLE IF NOT EXISTS tags (
                     author NUMBER, 
                     name TEXT, 
                     response TEXT
