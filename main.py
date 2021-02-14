@@ -60,7 +60,7 @@ async def on_ready():
         response text
     )
     """
-    conn.execute(injection)
+    await conn.execute(injection)
 
     await conn.close()
 
