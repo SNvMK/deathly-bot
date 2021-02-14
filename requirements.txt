@@ -1,4 +1,4 @@
 git+git://github.com/Rapptz/discord.py.git
 git+git://github.com/Gorialis/jishaku.git
 git+git://github.com/eunwoo1104/discord-py-slash-command.git
-aiopg
+asyncpg

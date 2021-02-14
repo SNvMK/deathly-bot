@@ -10,7 +10,7 @@ import jishaku
 from discord.ext import commands
 from discord.ext.commands import MissingPermissions, NotOwner
 
-import aiopg
+import asyncpg as aiopg
 from os import getenv, listdir
 
 
@@ -48,20 +48,21 @@ permissions = {
 
 @bot.event
 async def on_ready():
-    async with aiopg.create_pool(bot.db_url) as pool:
-        async with pool.acquire() as conn:
-            async with conn.cursor() as cur:
-                injection = """
-                DROP TABLE tags;
-                CREATE TABLE tags (
-                    author bigint,
-                    name text,
-                    response text
-                );
-                """
-                await cur.execute(injection)
     bot.load_extension("jishaku")
     print("Загружен модуль дебага...")
+
+    conn = await aiopg.connect(bot.db_url)
+
+    injection = """
+    CREATE TABLE tags(
+        author bigint,
+        name text,
+        response text
+    )
+    """
+    conn.execute(injection)
+
+    await conn.close()
 
     print(f"Бот запущен как {str(bot.user)}")
 

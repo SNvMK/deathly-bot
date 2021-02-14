@@ -4,7 +4,7 @@ import discord_slash
 from discord.ext import commands
 from discord_slash import cog_ext
 
-import aiopg
+import asyncpg as aiopg
 
 class Tags(commands.Cog):
     def __init__(self, bot):
@@ -28,26 +28,7 @@ class Tags(commands.Cog):
                       name: str,
                       response: str
     ):
-        async with aiopg.create_pool(self.bot.db_url) as pool:
-            async with pool.acquire() as conn:
-                async with conn.cursor() as cur:
-                    await cur.execute("SELECT * FROM tags;")
-                    async for tag in cur:
-                        if tag[1] == name:
-                            await ctx.send(f"Тэг {name} уже существует!", hidden=True)
-                            break
-                    else:
-                        injection = """
-                        INSERT INTO tags (
-                            author, 
-                            name, 
-                            response
-                    ) VALUES (%s, %s, %s);
-                        """
-                        await cur.execute(injection, (ctx.author_id, name, response))
-                        
-                        await conn.commit()
-                        await ctx.send(f"Создан тэг {name}!", hidden=True)
+        ...
 
     @cog_ext.cog_subcommand(
         base="тэги",
@@ -64,18 +45,7 @@ class Tags(commands.Cog):
                          name: str,
                          reply_to: int = None
     ):
-        async with aiopg.create_pool(self.bot.db_url) as pool:
-            async with pool.acquire() as conn:
-                async with conn.cursor() as cur:
-                    await cur.execute("SELECT * FROM tags;")
-                    async for row in cur:
-                        if row[1] == name:
-                            if reply_to:
-                                msg = discord.utils.get(ctx.channel.history(limit=100), id=reply_to)
-                                await msg.reply(row[2])
-                            else:
-                                await ctx.send(row[2])
-                            break
+        ...
 
 
 def setup(bot):
