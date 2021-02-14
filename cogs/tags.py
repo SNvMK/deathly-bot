@@ -73,3 +73,6 @@ class Tags(commands.Cog):
     #                 """
     #                 await cur.execute(injection, (ctx.author_id, name))
 
+
+def setup(bot):
+    bot.add_cog(Tags(bot))
