@@ -31,10 +31,11 @@ class Tags(commands.Cog):
         async with aiopg.create_pool(self.bot.db_url) as pool:
             async with pool.acquire() as conn:
                 async with conn.cursor() as cur:
-                    cur.execute("SELECT * FROM tags;")
+                    await cur.execute("SELECT * FROM tags;")
                     for tag in cur:
                         if tag[2] == name:
                             await ctx.send(f"Тэг {name} уже существует!", hidden=True)
+                            break
                         else:
                             injection = """
                             INSERT INTO tags (
