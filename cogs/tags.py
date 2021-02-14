@@ -54,12 +54,14 @@ class Tags(commands.Cog):
         base_desc="Управление тэгами",
         description="Найти тэг",
         connector={
-            "имя": "name"
+            "имя": "name",
+            "ответить-на": "reply_to"
         },
         guild_ids=[664609892400758784]
     )
     async def search_tag(self, ctx,
-                         name: str
+                         name: str,
+                         reply_to: int = None
     ):
         async with aiopg.create_pool(self.bot.db_url) as pool:
             async with pool.acquire() as conn:
@@ -67,7 +69,11 @@ class Tags(commands.Cog):
                     await cur.execute("SELECT * FROM tags;")
                     async for row in cur:
                         if row[1] == name:
-                            await ctx.send(row[2])
+                            if reply_to:
+                                msg = discord.utils.get(ctx.channel.history(limit=100), id=reply_to)
+                                await msg.reply(row[2])
+                            else:
+                                await ctx.send(row[2])
                             break
 
 
