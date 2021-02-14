@@ -69,6 +69,8 @@ class Tags(commands.Cog):
                         if row[1] == name:
                             await ctx.send(row[2])
                             break
+                        else:
+                            await ctx.send("Тэг не найден", hidden=True)
 
 
 def setup(bot):
