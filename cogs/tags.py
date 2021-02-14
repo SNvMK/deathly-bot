@@ -48,31 +48,27 @@ class Tags(commands.Cog):
                             await ctx.send(f"Создан тэг {name}!", hidden=True)
                             break
 
-    # @cog_ext.cog_subcommand(
-    #     base="тэги",
-    #     name="удалить",
-    #     base_desc="Управление тэгами",
-    #     description="Удалить тэг",
-    #     connector={
-    #         "имя": "name",
-    #         "ответ": "response"
-    #     },
-    #     guild_ids=[664609892400758784]
-    # )
-    # async def add_tag(self, ctx,
-    #                   name: str
-    # ):
-    #     async with aiopg.create_pool(self.bot.db_url) as pool:
-    #         async with pool.acquire() as conn:
-    #             async with conn.cursor() as cur:
-    #                 injection = """
-    #                 INSERT INTO tags (
-    #                     author, 
-    #                     name, 
-    #                     response
-    #                 ) VALUES (%s, %s, %s);
-    #                 """
-    #                 await cur.execute(injection, (ctx.author_id, name))
+    @cog_ext.cog_subcommand(
+        base="тэги",
+        name="найти",
+        base_desc="Управление тэгами",
+        description="Найти тэг",
+        connector={
+            "имя": "name"
+        },
+        guild_ids=[664609892400758784]
+    )
+    async def search_tag(self, ctx,
+                      name: str
+    ):
+        async with aiopg.create_pool(self.bot.db_url) as pool:
+            async with pool.acquire() as conn:
+                async with conn.cursor() as cur:
+                    await cur.execute("SELECT * FROM tags;")
+                    async for row in cur:
+                        if row[1] == name:
+                            await ctx.send(row[2])
+                            break
 
 
 def setup(bot):
