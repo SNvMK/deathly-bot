@@ -74,7 +74,7 @@ async def on_slash_command_error(ctx, ex):
     elif isinstance(ex, discord.HTTPException):
         await ctx.send("Короче серверам дискорда пизда)")
     else:
-        await ctx.send(ex)
+        print(ex)
 
 
 if __name__ == "__main__":
