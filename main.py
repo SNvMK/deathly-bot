@@ -11,6 +11,7 @@ from discord.ext import commands
 from discord.ext.commands import MissingPermissions, NotOwner
 
 import asyncpg as aiopg
+import json
 from os import getenv, listdir
 
 
@@ -61,7 +62,7 @@ async def on_slash_command_error(ctx, ex):
     elif isinstance(ex, NotOwner):
         await ctx.send(f"Команду {ctx.name} может использовать только владелец", hidden=True)
     elif isinstance(ex, discord.HTTPException):
-        await ctx.send(ex)
+        await ctx.send(f"{ex.text}")
     else:
         print(ex)
 
