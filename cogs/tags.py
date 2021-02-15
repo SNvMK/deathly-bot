@@ -31,7 +31,7 @@ class Tags(commands.Cog):
     ):
         async with aiopg.create_pool(self.bot.db_url) as pool:
             async with pool.acquire() as conn:
-                tags = conn.fetch("SELECT * FROM tags")
+                tags = await conn.fetch("SELECT * FROM tags")
 
                 for tag in tags:
                     tag_dict = dict(tag)
