@@ -31,30 +31,16 @@ class Tags(commands.Cog):
     ):
         async with aiopg.create_pool(self.bot.db_url) as pool:
             async with pool.acquire() as conn:
-                tags = await conn.fetch("SELECT * FROM tags")
-                print("fetched")
-                for tag in tags:
-                    tag_dict = dict(tag)
-                    print("dict")
-                    if tag["name"] == name:
-                        await ctx.send("Тэг уже существует!", hidden=True)
-                        print("exists")
-                        break
+                injection = f"""
+                INSERT INTO tags (
+                    author, 
+                    name, 
+                    response
+                ) VALUES ($1, $2, $3)
+                """
 
-                    else:
-                        injection = f"""
-                        INSERT INTO tags (
-                            author, 
-                            name, 
-                            response
-                        ) VALUES ($1, $2, $3)
-                        """
-                        print("injection")
-
-                        await conn.execute(injection, ctx.author_id, name, response)
-                        print("exec")
-                        await ctx.send("Тэг создан", hidden=True)
-                        print("send")
+                await conn.execute(injection, ctx.author_id, name, response)
+                await ctx.send("Тэг создан", hidden=True)
 
 
     @cog_ext.cog_subcommand(
@@ -72,7 +58,21 @@ class Tags(commands.Cog):
                          name: str,
                          reply_to: int = None
     ):
-        ...
+        async with aiopg.create_pool(self.bot.db_url) as pool:
+            async with pool.acquire() as conn:
+                tags = await conn.fetch("SELECT * FROM tags")
+
+                for tag in tags:
+                    tag_dict = dict(tag)
+
+                    if tag_dict["name"] == name:
+                        if reply_to:
+                            msg = discord.utils.get(ctx.channel.messages.flatten, id=reply_to)
+                            await msg.reply(tag_dict["response"])
+                            break
+                        else:
+                            await ctx.send(tag_dict["response"])
+                            break
 
 
 def setup(bot):
