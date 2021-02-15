@@ -85,7 +85,7 @@ class Tags(commands.Cog):
                             await ctx.send(tag["response"])
                             break
                         else:
-                            msg = await ctx.channel.fetch_message(reply_to)
+                            msg = await ctx.channel.fetch_message(int(reply_to))
                             await msg.reply(tag["response"])
                             break
 
