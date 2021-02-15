@@ -81,8 +81,13 @@ class Tags(commands.Cog):
                 for tag in all_tags:
                     if tag["name"] == name:
                         selected_tag = tag
-                        await ctx.send(tag["response"])
-                        break
+                        if not reply_to:
+                            await ctx.send(tag["response"])
+                            break
+                        else:
+                            msg = await ctx.channel.fetch_message(reply_to)
+                            await msg.reply(tag["response"])
+                            break
 
     @cog_ext.cog_subcommand(
         base="тэги",
