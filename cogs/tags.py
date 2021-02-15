@@ -72,19 +72,16 @@ class Tags(commands.Cog):
             async with pool.acquire() as conn:
                 tags = await conn.fetch("SELECT * FROM tags")
 
+                all_tags = []
+
                 for tag in tags:
                     tag_dict = dict(tag)
+                    all_tags.append(tag_dict)
 
-                    if tag_dict["name"] == name:
-                        if reply_to:
-                            msg = await ctx.channel.fetch_message(reply_to)
-                            await msg.reply(tag_dict["response"])
-                            break
-                        else:
-                            await ctx.send(tag_dict["response"])
-                            break
-                    else:
-                        await ctx.send("Тэг не существует", hidden=True)
+                for tag in all_tags:
+                    if tag["name"] == name:
+                        selected_tag = tag
+                        await ctx.send(tag["response"])
                         break
 
     @cog_ext.cog_subcommand(
@@ -104,20 +101,21 @@ class Tags(commands.Cog):
             async with pool.acquire() as conn:
                 tags = await conn.fetch("SELECT * FROM tags")
 
+                all_tags = []
+
                 for tag in tags:
                     tag_dict = dict(tag)
+                    all_tags.append(tag_dict)
 
-                    if tag_dict["name"] == name:
+                for tag in all_tags:
+                    if tag["name"] == name:
+                        selected_tag = tag
                         if tag["author"] == ctx.author_id:
                             await conn.execute(f"DELETE FROM tags WHERE name = {name}")
                             await ctx.send("Тэг удалён", hidden=True)
                             break
                         else:
-                            await ctx.send("Вы не автор этого тэга", hidden=True)
-                            break
-                    else:
-                        await ctx.send("Тэг не существует", hidden=True)
-                        break
+                            await ctx.send("Вы не владелец тэга", hidden=True)
 
     @cog_ext.cog_subcommand(
         base="тэги",
@@ -136,19 +134,25 @@ class Tags(commands.Cog):
             async with pool.acquire() as conn:
                 tags = await conn.fetch("SELECT * FROM tags")
 
+                all_tags = []
+
                 for tag in tags:
                     tag_dict = dict(tag)
+                    all_tags.append(tag_dict)
 
-                    if tag_dict["name"] == name:
+                for tag in all_tags:
+                    if tag["name"] == name:
+                        selected_tag = tag
+                        author = await ctx.guild.fetch_member(tag["author"])
                         embed = discord.Embed(
                             title=f"Тэг `{name}`",
-                            description=f"Автор: {ctx.guild.fetch_member(tag_dict['author']).mention}"
+                            description=f"Автор: {author.mention}",
+                            color=self.bot.embed_color
                         )
                         await ctx.send(embed=embed)
                         break
-                    else:
-                        await ctx.send("Тэг не существует", hidden=True)
-                        break
+
+                
 
 
 def setup(bot):
