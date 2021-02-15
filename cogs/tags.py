@@ -32,11 +32,13 @@ class Tags(commands.Cog):
         async with aiopg.create_pool(self.bot.db_url) as pool:
             async with pool.acquire() as conn:
                 tags = await conn.fetch("SELECT * FROM tags")
-
+                print("fetched")
                 for tag in tags:
                     tag_dict = dict(tag)
+                    print("dict")
                     if tag["name"] == name:
                         await ctx.send("Тэг уже существует!", hidden=True)
+                        print("exists")
                         break
 
                     else:
@@ -47,9 +49,12 @@ class Tags(commands.Cog):
                             response
                         ) VALUES ($1, $2, $3)
                         """
+                        print("injection")
 
                         await conn.execute(injection, ctx.author_id, name, response)
+                        print("exec")
                         await ctx.send("Тэг создан", hidden=True)
+                        print("send")
 
 
     @cog_ext.cog_subcommand(
