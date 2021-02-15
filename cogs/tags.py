@@ -111,7 +111,7 @@ class Tags(commands.Cog):
                     if tag["name"] == name:
                         selected_tag = tag
                         if tag["author"] == ctx.author_id:
-                            await conn.execute(f"DELETE FROM tags WHERE name = {name}")
+                            await conn.execute(f"DELETE FROM tags WHERE name = '{name}'")
                             await ctx.send("Тэг удалён", hidden=True)
                             break
                         else:
