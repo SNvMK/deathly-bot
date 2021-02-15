@@ -61,7 +61,7 @@ async def on_slash_command_error(ctx, ex):
     elif isinstance(ex, NotOwner):
         await ctx.send(f"Команду {ctx.name} может использовать только владелец", hidden=True)
     elif isinstance(ex, discord.HTTPException):
-        await ctx.send("Короче серверам дискорда пизда)")
+        await ctx.send(ex)
     else:
         print(ex)
 
