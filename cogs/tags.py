@@ -67,11 +67,40 @@ class Tags(commands.Cog):
 
                     if tag_dict["name"] == name:
                         if reply_to:
-                            msg = discord.utils.get(await ctx.channel.history(limit=100).flatten(), id=reply_to)
+                            msg = ctx.channel.fetch_message(reply_to)
                             await msg.reply(tag_dict["response"])
                             break
                         else:
                             await ctx.send(tag_dict["response"])
+                            break
+
+    @cog_ext.cog_subcommand(
+        base="тэги",
+        name="удалить",
+        base_desc="Управление тэгами",
+        description="Удалить тэг",
+        connector={
+            "имя": "name"
+        },
+        guild_ids=[664609892400758784]
+    )
+    async def search_tag(self, ctx,
+                         name: str
+    ):
+        async with aiopg.create_pool(self.bot.db_url) as pool:
+            async with pool.acquire() as conn:
+                tags = await conn.fetch("SELECT * FROM tags")
+
+                for tag in tags:
+                    tag_dict = dict(tag)
+
+                    if tag_dict["name"] == name:
+                        if tag["author"] == ctx.author_id:
+                            await conn.execute(f"DELETE FROM tags WHERE name = {name}")
+                            await ctx.send("Тэг удалён", hidden=True)
+                            break
+                        else:
+                            await ctx.send("Вы не автор этого тэга", hidden=True)
                             break
 
 
