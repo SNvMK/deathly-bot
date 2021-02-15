@@ -31,16 +31,26 @@ class Tags(commands.Cog):
     ):
         async with aiopg.create_pool(self.bot.db_url) as pool:
             async with pool.acquire() as conn:
-                injection = f"""
-                INSERT INTO tags (
-                    author, 
-                    name, 
-                    response
-                ) VALUES ($1, $2, $3)
-                """
+                tags = conn.fetch("SELECT * FROM tags")
 
-                await conn.execute(injection, ctx.author_id, name, response)
-                await ctx.send("Тэг создан", hidden=True)
+                for tag in tags:
+                    tag_dict = dict(tag)
+
+                    if name in list(tag_dict.values()):
+                        await ctx.send("Тэг уже существует", hidden=True)
+                        break
+                    else:
+                        injection = f"""
+                        INSERT INTO tags (
+                            author, 
+                            name, 
+                            response
+                        ) VALUES ($1, $2, $3)
+                        """
+
+                        await conn.execute(injection, ctx.author_id, name, response)
+                        await ctx.send("Тэг создан", hidden=True)
+                        break
 
 
     @cog_ext.cog_subcommand(
@@ -67,12 +77,15 @@ class Tags(commands.Cog):
 
                     if tag_dict["name"] == name:
                         if reply_to:
-                            msg = ctx.channel.fetch_message(reply_to)
+                            msg = await ctx.channel.fetch_message(reply_to)
                             await msg.reply(tag_dict["response"])
                             break
                         else:
                             await ctx.send(tag_dict["response"])
                             break
+                    else:
+                        await ctx.send("Тэг не существует", hidden=True)
+                        break
 
     @cog_ext.cog_subcommand(
         base="тэги",
@@ -102,6 +115,40 @@ class Tags(commands.Cog):
                         else:
                             await ctx.send("Вы не автор этого тэга", hidden=True)
                             break
+                    else:
+                        await ctx.send("Тэг не существует", hidden=True)
+                        break
+
+    @cog_ext.cog_subcommand(
+        base="тэги",
+        name="инфо",
+        base_desc="Управление тэгами",
+        description="Инфо о тэге",
+        connector={
+            "имя": "name"
+        },
+        guild_ids=[664609892400758784]
+    )
+    async def tag_info(self, ctx,
+                       name: str
+    ):
+        async with aiopg.create_pool(self.bot.db_url) as pool:
+            async with pool.acquire() as conn:
+                tags = await conn.fetch("SELECT * FROM tags")
+
+                for tag in tags:
+                    tag_dict = dict(tag)
+
+                    if tag_dict["name"] == name:
+                        embed = discord.Embed(
+                            title=f"Тэг `{name}`",
+                            description=f"Автор: {ctx.guild.fetch_member(tag_dict['author']).mention}"
+                        )
+                        await ctx.send(embed=embed)
+                        break
+                    else:
+                        await ctx.send("Тэг не существует", hidden=True)
+                        break
 
 
 def setup(bot):
