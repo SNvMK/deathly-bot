@@ -6,6 +6,7 @@ from discord_slash import cog_ext
 
 import asyncpg as aiopg
 
+
 class Tags(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -28,7 +29,28 @@ class Tags(commands.Cog):
                       name: str,
                       response: str
     ):
-        ...
+        async with aiopg.create_pool(self.bot.db_url) as pool:
+            async with pool.acquire() as conn:
+                async with conn.cursor() as cur:
+                    async for tag_rec in cur:
+                        tag = dict(tag_rec)
+
+                        if tag["name"] == name:
+                            break
+                            await ctx.send("Тэг уже существует!", hidden=True)
+
+                        else:
+                            injection = f"""
+                            INSERT INTO tags (
+                                author, 
+                                name, 
+                                response
+                            ) VALUES ($1, $2, $3)
+                            """
+
+                            await cur.execute(injection, ctx.author_id, name, response)
+                            await ctx.send("Тэг создан", hidden=True)
+
 
     @cog_ext.cog_subcommand(
         base="тэги",

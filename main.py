@@ -51,18 +51,6 @@ async def on_ready():
     bot.load_extension("jishaku")
     print("Загружен модуль дебага...")
 
-    conn = await aiopg.connect(bot.db_url)
-
-    injection = """
-    CREATE TABLE tags(
-        author bigint,
-        name text,
-        response text
-    )
-    """
-    await conn.execute(injection)
-
-    await conn.close()
 
     print(f"Бот запущен как {str(bot.user)}")
 
