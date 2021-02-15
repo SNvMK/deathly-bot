@@ -82,7 +82,8 @@ class Tags(commands.Cog):
                     if tag["name"] == name:
                         selected_tag = tag
                         if reply_to:
-                            msg = await ctx.channel.fetch_message(int(reply_to))
+                            his = ctx.channel.history(limit=100)
+                            msg = discord.utils.get(await his.flatten(), id=reply_to)
                             await msg.reply(tag["response"])
                             break
                         else:
