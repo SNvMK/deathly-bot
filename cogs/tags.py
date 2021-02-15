@@ -84,7 +84,7 @@ class Tags(commands.Cog):
         },
         guild_ids=[664609892400758784]
     )
-    async def search_tag(self, ctx,
+    async def delete_tag(self, ctx,
                          name: str
     ):
         async with aiopg.create_pool(self.bot.db_url) as pool:
